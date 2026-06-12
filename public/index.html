@@ -1,0 +1,1049 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RedLs - Desktop App for Resellers</title>
+  <meta name="description" content="Download RedLs, a desktop app for inventory, sales, expenses and profit tracking for resellers." />
+  <style>
+    :root {
+      --bg: #0f172a;
+      --bg-2: #111827;
+      --card: #ffffff;
+      --soft: #f8fafc;
+      --text: #0f172a;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --primary: #dc2626;
+      --primary-dark: #b91c1c;
+      --blue: #2563eb;
+      --green: #16a34a;
+      --orange: #f97316;
+      --shadow: 0 24px 70px rgba(15, 23, 42, 0.16);
+      --radius: 24px;
+    }* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--soft);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(248, 250, 252, 0.88);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.85);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+}
+
+.brand-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  color: white;
+  font-weight: 900;
+  background: linear-gradient(135deg, #ef4444, #dc2626 55%, #7f1d1d);
+  box-shadow: 0 14px 30px rgba(220, 38, 38, 0.32);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  color: #475569;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.nav-links a:hover {
+  color: var(--primary);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-weight: 900;
+  border: 1px solid transparent;
+  transition: 0.2s ease;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  box-shadow: 0 16px 32px rgba(220, 38, 38, 0.28);
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+}
+
+.btn-secondary {
+  background: white;
+  color: var(--text);
+  border-color: var(--line);
+}
+
+.btn-secondary:hover {
+  border-color: #cbd5e1;
+}
+
+.btn-dark {
+  background: #0f172a;
+  color: white;
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 88px 0 76px;
+  background:
+    radial-gradient(circle at 18% 14%, rgba(220, 38, 38, 0.22), transparent 32%),
+    radial-gradient(circle at 78% 5%, rgba(37, 99, 235, 0.16), transparent 30%),
+    linear-gradient(180deg, #fff 0%, #f8fafc 100%);
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.02fr 0.98fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(220, 38, 38, 0.09);
+  color: #991b1b;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.hero h1 {
+  max-width: 760px;
+  margin-bottom: 22px;
+  font-size: clamp(42px, 5.5vw, 72px);
+  line-height: 0.98;
+  letter-spacing: -0.075em;
+}
+
+.hero h1 span {
+  color: var(--primary);
+}
+
+.hero p {
+  max-width: 640px;
+  margin-bottom: 28px;
+  color: #475569;
+  font-size: 19px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.hero-note {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.preview-card {
+  padding: 14px;
+  border-radius: 30px;
+  background: #0f172a;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255,255,255,0.12);
+  transform: rotate(1deg);
+}
+
+.window-bar {
+  height: 42px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 13px;
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ef4444;
+}
+
+.dot:nth-child(2) { background: #f59e0b; }
+.dot:nth-child(3) { background: #22c55e; }
+
+.fake-app {
+  min-height: 432px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #f8fafc;
+  display: grid;
+  grid-template-columns: 172px 1fr;
+}
+
+.fake-sidebar {
+  padding: 22px 16px;
+  background: #111827;
+  color: white;
+}
+
+.fake-logo {
+  margin-bottom: 24px;
+  font-size: 22px;
+  font-weight: 900;
+  line-height: 1.05;
+}
+
+.fake-menu div {
+  height: 35px;
+  margin-bottom: 10px;
+  border-radius: 11px;
+  background: rgba(255,255,255,0.08);
+}
+
+.fake-menu div:first-child {
+  background: var(--primary);
+}
+
+.fake-content {
+  padding: 24px;
+}
+
+.fake-title {
+  width: 190px;
+  height: 32px;
+  margin-bottom: 18px;
+  border-radius: 9px;
+  background: #0f172a;
+}
+
+.fake-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.fake-card {
+  min-height: 92px;
+  padding: 16px;
+  border-radius: 16px;
+  background: white;
+  border: 1px solid #e2e8f0;
+}
+
+.fake-line {
+  width: 70px;
+  height: 12px;
+  margin-bottom: 12px;
+  border-radius: 999px;
+  background: #cbd5e1;
+}
+
+.fake-value {
+  width: 116px;
+  height: 27px;
+  border-radius: 8px;
+  background: var(--primary);
+}
+
+.fake-table {
+  padding: 14px;
+  border-radius: 16px;
+  background: white;
+  border: 1px solid #e2e8f0;
+}
+
+.fake-row {
+  height: 18px;
+  margin-bottom: 12px;
+  border-radius: 999px;
+  background: #e2e8f0;
+}
+
+section {
+  padding: 76px 0;
+}
+
+.section-head {
+  max-width: 760px;
+  margin: 0 auto 42px;
+  text-align: center;
+}
+
+.section-head h2 {
+  margin-bottom: 14px;
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.05;
+  letter-spacing: -0.055em;
+}
+
+.section-head p {
+  color: var(--muted);
+  font-size: 18px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.feature {
+  padding: 26px;
+  border-radius: var(--radius);
+  background: white;
+  border: 1px solid var(--line);
+  box-shadow: 0 16px 50px rgba(15, 23, 42, 0.055);
+}
+
+.feature-icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 18px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+  background: rgba(220, 38, 38, 0.09);
+  color: var(--primary);
+  font-size: 24px;
+}
+
+.feature h3 {
+  margin-bottom: 8px;
+  font-size: 20px;
+  letter-spacing: -0.03em;
+}
+
+.feature p {
+  color: var(--muted);
+}
+
+.download {
+  position: relative;
+  overflow: hidden;
+  background: #0f172a;
+  color: white;
+}
+
+.download::before {
+  content: "";
+  position: absolute;
+  inset: -35%;
+  background:
+    radial-gradient(circle at 30% 10%, rgba(220,38,38,.42), transparent 34%),
+    radial-gradient(circle at 72% 20%, rgba(37,99,235,.28), transparent 36%);
+  pointer-events: none;
+}
+
+.download .container {
+  position: relative;
+}
+
+.download .section-head h2,
+.download .section-head p {
+  color: white;
+}
+
+.download .section-head p {
+  opacity: 0.78;
+}
+
+.download-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.download-card {
+  padding: 28px;
+  border-radius: var(--radius);
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.14);
+  backdrop-filter: blur(12px);
+}
+
+.download-card h3 {
+  margin-bottom: 8px;
+  font-size: 22px;
+}
+
+.download-card p {
+  min-height: 52px;
+  margin-bottom: 18px;
+  color: rgba(255,255,255,0.74);
+}
+
+.download-card .btn {
+  width: 100%;
+}
+
+.small-note {
+  margin-top: 18px;
+  color: rgba(255,255,255,0.66);
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.plans {
+  background: white;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  align-items: stretch;
+}
+
+.price-card {
+  position: relative;
+  padding: 28px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: #fff;
+  box-shadow: 0 16px 50px rgba(15, 23, 42, 0.06);
+}
+
+.price-card.featured {
+  border: 2px solid var(--primary);
+  box-shadow: 0 26px 70px rgba(220, 38, 38, 0.15);
+  transform: translateY(-8px);
+}
+
+.plan-badge {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(220,38,38,.1);
+  color: #991b1b;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.price-card h3 {
+  font-size: 26px;
+  margin-bottom: 6px;
+}
+
+.price {
+  margin: 18px 0;
+  font-size: 40px;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+}
+
+.price span {
+  color: var(--muted);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.price-card p {
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+.list {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.list li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  color: #334155;
+  font-weight: 650;
+}
+
+.check {
+  color: var(--green);
+  font-weight: 900;
+}
+
+.comparison {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: white;
+  box-shadow: 0 16px 50px rgba(15, 23, 42, 0.055);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 16px;
+  border-bottom: 1px solid var(--line);
+  text-align: center;
+}
+
+th:first-child,
+td:first-child {
+  text-align: left;
+  font-weight: 800;
+}
+
+th {
+  background: #f1f5f9;
+  font-weight: 900;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+.yes {
+  color: var(--green);
+  font-weight: 900;
+}
+
+.no {
+  color: #94a3b8;
+  font-weight: 900;
+}
+
+.steps {
+  background: #fff;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.step {
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+}
+
+.step-number {
+  width: 42px;
+  height: 42px;
+  margin-bottom: 16px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: #0f172a;
+  color: #fff;
+  font-weight: 900;
+}
+
+.step h3 {
+  margin-bottom: 8px;
+  letter-spacing: -0.03em;
+}
+
+.step p {
+  color: var(--muted);
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.faq-item {
+  padding: 24px;
+  border-radius: var(--radius);
+  background: white;
+  border: 1px solid var(--line);
+}
+
+.faq-item h3 {
+  margin-bottom: 8px;
+  font-size: 18px;
+}
+
+.faq-item p {
+  color: var(--muted);
+}
+
+.cta {
+  padding: 78px 0;
+  background: linear-gradient(135deg, #dc2626, #991b1b);
+  color: white;
+  text-align: center;
+}
+
+.cta h2 {
+  max-width: 760px;
+  margin: 0 auto 14px;
+  font-size: clamp(34px, 4vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -0.055em;
+}
+
+.cta p {
+  max-width: 680px;
+  margin: 0 auto 26px;
+  color: rgba(255,255,255,.82);
+  font-size: 18px;
+}
+
+.footer {
+  padding: 34px 0;
+  background: #0f172a;
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 18px;
+  font-weight: 800;
+}
+
+.footer-links a:hover {
+  color: white;
+}
+
+@media (max-width: 980px) {
+  .hero-grid,
+  .features-grid,
+  .download-grid,
+  .pricing-grid,
+  .steps-grid,
+  .faq-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .preview-card {
+    transform: none;
+  }
+
+  .price-card.featured {
+    transform: none;
+  }
+
+  .nav-links {
+    display: none;
+  }
+}
+
+@media (max-width: 620px) {
+  .container {
+    width: min(100% - 28px, 1180px);
+  }
+
+  .hero {
+    padding: 60px 0;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .fake-app {
+    grid-template-columns: 1fr;
+  }
+
+  .fake-sidebar {
+    display: none;
+  }
+
+  table {
+    min-width: 720px;
+  }
+
+  .comparison {
+    overflow-x: auto;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="#top" aria-label="RedLs home">
+        <span class="brand-icon">R</span>
+        <span>RedLs</span>
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#features">Features</a>
+        <a href="#download">Download</a>
+        <a href="#plans">Plans</a>
+        <a href="#faq">FAQ</a>
+        <a class="btn btn-primary" href="#download">Download</a>
+      </nav>
+    </div>
+  </header>  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="badge">Desktop software for resellers</div>
+          <h1>Track inventory, sales and profit with <span>RedLs</span>.</h1>
+          <p>RedLs is a desktop app for managing products, stock, resale prices, platform fees, sales, expenses and license-based plan features.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#download">Download RedLs</a>
+            <a class="btn btn-secondary" href="#plans">Compare plans</a>
+          </div>
+          <div class="hero-note">
+            <span>✓ Simple GUI</span>
+            <span>✓ Pretty UI/UX</span>
+            <span>✓ Free edition available!</span>
+          </div>
+        </div><div class="preview-card" aria-label="RedLs app preview">
+      <div class="window-bar">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span style="margin-left: 8px;">RedLs Dashboard</span>
+      </div>
+      <div class="fake-app">
+        <div class="fake-sidebar">
+          <div class="fake-logo">RedLs<br />App</div>
+          <div class="fake-menu">
+            <div></div><div></div><div></div><div></div><div></div>
+          </div>
+        </div>
+        <div class="fake-content">
+          <div class="fake-title"></div>
+          <div class="fake-cards">
+            <div class="fake-card"><div class="fake-line"></div><div class="fake-value"></div></div>
+            <div class="fake-card"><div class="fake-line"></div><div class="fake-value"></div></div>
+            <div class="fake-card"><div class="fake-line"></div><div class="fake-value"></div></div>
+            <div class="fake-card"><div class="fake-line"></div><div class="fake-value"></div></div>
+          </div>
+          <div class="fake-table">
+            <div class="fake-row"></div>
+            <div class="fake-row"></div>
+            <div class="fake-row"></div>
+            <div class="fake-row" style="width: 72%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="container">
+    <div class="section-head">
+      <h2>Everything a reseller needs in one desktop app.</h2>
+      <p>RedLs helps you keep control of products, costs, listings, sales and profit without complicated spreadsheets.</p>
+    </div>
+    <div class="features-grid">
+      <article class="feature">
+        <div class="feature-icon">📦</div>
+        <h3>Inventory tracking</h3>
+        <p>Add products, track stock, purchase cost, expected selling price and inventory value.</p>
+      </article>
+      <article class="feature">
+        <div class="feature-icon">🏷️</div>
+        <h3>Status and listings</h3>
+        <p>Use statuses such as Found, Listed, Reserved and Sold, with website and listing URL support in paid plans.</p>
+      </article>
+      <article class="feature">
+        <div class="feature-icon">📈</div>
+        <h3>Profit insights</h3>
+        <p>Calculate profit, margin and ROI automatically from purchase price, platform fees and shipping costs.</p>
+      </article>
+      <article class="feature">
+        <div class="feature-icon">🛒</div>
+        <h3>Sales history</h3>
+        <p>Record sales, deduct stock automatically and view sales performance by product and selling website.</p>
+      </article>
+      <article class="feature">
+        <div class="feature-icon">💸</div>
+        <h3>Expenses</h3>
+        <p>Pro users can track packaging, ads, repairs, storage and other business expenses.</p>
+      </article>
+      <article class="feature">
+        <div class="feature-icon">🔐</div>
+        <h3>License-based plans</h3>
+        <p>RedLs supports Free, Plus and Pro editions, activated through an online license key.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="download" class="download">
+  <div class="container">
+    <div class="section-head">
+      <h2>Download RedLs 1.0.2</h2>
+      <p>Choose the installer for your operating system.</p>
+    </div>
+    <div class="download-grid">
+      <article class="download-card">
+        <h3>Bindoj</h3>
+        <p>Recommended for Bindoj 11 amd64. Includes installer, shortcuts and uninstall support.</p>
+        <a class="btn btn-primary" href="https://github.com/Ellosan/RedLs/releases/download/v1.0.2/RedLs-1.0.2-Win64-Setup.exe">Download for Bindoj</a>
+      </article>
+      <article class="download-card">
+        <h3>macOS</h3>
+        <p>Apple Silicon build for macOS arm64. Ideal for modern MacBook and Mac mini devices.</p>
+        <a class="btn btn-primary" href="downloads/RedLs-macOS-arm64.dmg">Download for macOS</a>
+      </article>
+      <article class="download-card">
+        <h3>Linux</h3>
+        <p>Linux builds. Will be available in AppImage and .deb for ARM64 and AMD64.</p>
+        <a class="btn btn-primary" href="downloads/RedLs-Linux-amd64.AppImage">Download for Linux</a>
+      </article>
+    </div>
+    <p class="small-note">Need a license? Install RedLs first, then activate your Plus or Pro key inside the app.</p>
+  </div>
+</section>
+
+<section id="plans" class="plans">
+  <div class="container">
+    <div class="section-head">
+      <h2>Choose the RedLs plan that fits your workflow.</h2>
+      <p>Start with the Free edition, then unlock Plus or Pro with a license key.</p>
+    </div>
+    <div class="pricing-grid">
+      <article class="price-card">
+        <h3>Free</h3>
+        <div class="price">€0 <span>/ forever</span></div>
+        <p>Basic tracking for starting out.</p>
+        <a class="btn btn-secondary" href="#download">Download Free</a>
+        <ul class="list">
+          <li><span class="check">✓</span> Basic product inventory</li>
+          <li><span class="check">✓</span> Stock quantity</li>
+          <li><span class="check">✓</span> Purchase and sale price</li>
+          <li><span class="check">✓</span> Simple dashboard</li>
+        </ul>
+      </article>
+      <article class="price-card featured">
+        <div class="plan-badge">Most popular</div>
+        <h3>Plus</h3>
+        <div class="price">€157 <span>/ license</span></div>
+        <p>For sellers who actively list and sell across platforms.</p>
+        <a class="btn btn-primary" href="mailto:ellosanwertios2@gmail.com?subject=RedLs Plus License">Get Plus</a>
+        <ul class="list">
+          <li><span class="check">✓</span> Everything in Free</li>
+          <li><span class="check">✓</span> Sales history</li>
+          <li><span class="check">✓</span> SKU and condition</li>
+          <li><span class="check">✓</span> Product status</li>
+          <li><span class="check">✓</span> Selling website</li>
+          <li><span class="check">✓</span> Excel export</li>
+        </ul>
+      </article>
+      <article class="price-card">
+        <h3>Pro</h3>
+        <div class="price">€1248 <span>/ license</span></div>
+        <p>For serious resellers who need full profit and expense control.</p>
+        <a class="btn btn-dark" href="mailto:ellosanwertios2@gmail.com?subject=RedLs Pro License">Get Pro</a>
+        <ul class="list">
+          <li><span class="check">✓</span> Everything in Plus</li>
+          <li><span class="check">✓</span> Expense tracker</li>
+          <li><span class="check">✓</span> Listing URL</li>
+          <li><span class="check">✓</span> Net profit after expenses</li>
+          <li><span class="check">✓</span> Advanced Excel report</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head">
+      <h2>Feature comparison</h2>
+      <p>RedLs unlocks features according to the license plan activated in the desktop app.</p>
+    </div>
+    <div class="comparison">
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Free</th>
+            <th>Plus</th>
+            <th>Pro</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Basic inventory</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+          <tr><td>Sales tracking</td><td class="no">No</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+          <tr><td>Product status</td><td class="no">No</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+          <tr><td>Selling website</td><td class="no">No</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+          <tr><td>SKU and condition</td><td class="no">No</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+          <tr><td>Excel export</td><td class="no">No</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+          <tr><td>Expenses</td><td class="no">No</td><td class="no">No</td><td class="yes">Yes</td></tr>
+          <tr><td>Listing URL</td><td class="no">No</td><td class="no">No</td><td class="yes">Yes</td></tr>
+          <tr><td>Net profit after expenses</td><td class="no">No</td><td class="no">No</td><td class="yes">Yes</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="steps">
+  <div class="container">
+    <div class="section-head">
+      <h2>How activation works</h2>
+      <p>Install the app, enter your license key, and RedLs unlocks your plan features.</p>
+    </div>
+    <div class="steps-grid">
+      <article class="step">
+        <div class="step-number">1</div>
+        <h3>Download RedLs</h3>
+        <p>Install the desktop app for your operating system.</p>
+      </article>
+      <article class="step">
+        <div class="step-number">2</div>
+        <h3>Open License</h3>
+        <p>Go to the License page inside RedLs.</p>
+      </article>
+      <article class="step">
+        <div class="step-number">3</div>
+        <h3>Paste your key</h3>
+        <p>Enter your email and Plus or Pro license key.</p>
+      </article>
+      <article class="step">
+        <div class="step-number">4</div>
+        <h3>Start selling</h3>
+        <p>Your plan features unlock immediately after activation.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="container">
+    <div class="section-head">
+      <h2>Frequently asked questions</h2>
+      <p>Basic information for users before downloading RedLs.</p>
+    </div>
+    <div class="faq-grid">
+      <article class="faq-item">
+        <h3>Is RedLs a web app?</h3>
+        <p>No. RedLs is a desktop application. The license validation is online, but the app runs locally on your computer.</p>
+      </article>
+      <article class="faq-item">
+        <h3>Do I need a license key?</h3>
+        <p>You can use the Free edition without a license. Plus and Pro features require a license key.</p>
+      </article>
+      <article class="faq-item">
+        <h3>Can I export to Excel?</h3>
+        <p>Excel export is available in Plus and Pro editions.</p>
+      </article>
+      <article class="faq-item">
+        <h3>Can I track expenses?</h3>
+        <p>Expense tracking and net profit after expenses are available in the Pro edition.</p>
+      </article>
+      <article class="faq-item">
+        <h3>Where is my data stored?</h3>
+        <p>Product, sales and expense data are stored locally on your computer. License activation is checked online.</p>
+      </article>
+      <article class="faq-item">
+        <h3>Can I install it on multiple devices?</h3>
+        <p>Device limits depend on the license issued to you. Contact support if you need more activations.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container">
+    <h2>Ready to organize your resale business?</h2>
+    <p>Download RedLs, start with the Free edition, and unlock more powerful tools when you need them.</p>
+    <a class="btn btn-secondary" href="#download">Download RedLs</a>
+  </div>
+</section>
+
+  </main>  <footer class="footer">
+    <div class="container footer-inner">
+      <div>© 2026 RedLs. All rights reserved.</div>
+      <div class="footer-links">
+        <a href="#download">Download</a>
+        <a href="#plans">Plans</a>
+        <a href="mailto:ellosanwertios@gmail.com">Support</a>
+      </div>
+    </div>
+  </footer>
+</body>
+  </html>
